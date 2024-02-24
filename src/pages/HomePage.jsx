@@ -1,9 +1,9 @@
-import { SlideNavbarComponent } from "../components/SlideNavbarComponent.jsx";
+import { NavbarComponent } from "../components/NavbarComponent.jsx";
 
 export const HomePage = () => {
   return (
     <>
-      <SlideNavbarComponent />
+      <NavbarComponent />
     </>
   );
 };

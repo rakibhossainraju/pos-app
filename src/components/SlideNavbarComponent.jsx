@@ -1,19 +1,21 @@
 import { useState } from "react";
 
 export const SlideNavbarComponent = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <div className="relative">
+    <>
       <button
         onClick={() => setIsMenuOpen(true)}
-        className={`${isMenuOpen ? "scale-0" : "scale-100"}`}
+        className={`group duration-300 ${isMenuOpen ? "scale-0" : "scale-100"}`}
       >
-        {SlideNavbarIcons.menu()}
+        {SlideNavbarIcons.menu(
+          "stroke-indigo-800 group-hover:stroke-indigo-500",
+        )}
       </button>
       <aside
-        className={`absolute -left-full top-0 -z-10 flex min-h-screen w-full transition-all duration-200 ease-linear ${isMenuOpen && "left-0 z-10"}`}
+        className={`absolute -left-full top-0 flex min-h-screen w-full transition-all duration-200 ease-linear ${isMenuOpen && "left-0 z-10"}`}
       >
-        <section className="w-[25%]">
+        <section className="relative w-[25%] max-w-lg">
           {/*Logo and location box */}
           <div className="bg-gray-100 p-4">
             <h3 className="pb-7 pt-5 text-center text-[2rem] font-bold [text-shadow:0_1px_2px_black]">
@@ -25,47 +27,58 @@ export const SlideNavbarComponent = () => {
             </h4>
           </div>
           {/*Navigations*/}
-          <nav>
+          <nav className="flex h-screen flex-col justify-between bg-white">
             <ul className="flex flex-col gap-1">
-              <li className="flex items-center px-2 py-3 pl-5 text-xl text-gray-500 hover:bg-indigo-100 hover:text-indigo-500">
+              <NavItem>
                 {SlideNavbarIcons.grid("fill-[currentColor] mr-6")} Dashboard
-              </li>
-              <li className="flex items-center px-2 py-3 pl-5 text-xl text-gray-500 hover:bg-indigo-100 hover:text-indigo-500">
+              </NavItem>
+              <NavItem>
                 {SlideNavbarIcons.location("fill-[currentColor] mr-5")}
                 Locations
-              </li>
-              <li className="flex items-center px-2 py-3 pl-5 text-xl text-gray-500 hover:bg-indigo-100 hover:text-indigo-500">
+              </NavItem>
+              <NavItem>
                 {SlideNavbarIcons.dollarBill("fill-[currentColor] mr-4")} POS
                 Invoices
-              </li>
-              <li className="flex cursor-pointer items-center px-2 py-3 pl-5 text-xl text-gray-500 hover:bg-indigo-100 hover:text-indigo-500">
+              </NavItem>
+              <NavItem>
                 {SlideNavbarIcons.gear("fill-[currentColor] mr-4")} Settings
-              </li>
+              </NavItem>
             </ul>
+            <button className="bottom-3 mx-auto mb-10 w-full max-w-[20rem] rounded-[5px] border-2 border-gray-400 py-2 text-xl font-medium text-gray-500">
+              Logout
+            </button>
           </nav>
         </section>
         <div
           onClick={() => setIsMenuOpen(false)}
-          className="w-[75%] cursor-pointer bg-red-200 opacity-80"
+          className="w-[75%] cursor-pointer bg-[#9CA3AF7E]"
         >
-          {SlideNavbarIcons.cross()}
+          {SlideNavbarIcons.cross("ml-8 mt-14")}
         </div>
       </aside>
-    </div>
+    </>
   );
 };
+
+const NavItem = ({ styles, children, ...rest }) => (
+  <li
+    {...rest}
+    className="flex cursor-pointer items-center px-2 py-3 pl-5 text-xl text-gray-500 hover:bg-indigo-100 hover:text-indigo-500"
+  >
+    {children}
+  </li>
+);
 
 // This will convert to inline SVG which is a bit optimized and also it is easy to add hover color
 const SlideNavbarIcons = {
   menu: (styles) => (
     <svg
-      className={`aspect-square w-10 ${styles}`}
+      className={`aspect-square w-8 ${styles}`}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M4 6H20M4 12H20M4 18H20"
-        stroke="black"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -74,7 +87,7 @@ const SlideNavbarIcons = {
   ),
   cross: (styles) => (
     <svg
-      className={`ml-8 mt-16 h-6 w-6 fill-gray-400 hover:fill-gray-100 ${styles}`}
+      className={`h-6 w-6 fill-white hover:fill-lime-400 ${styles}`}
       width="800px"
       height="800px"
       viewBox="0 0 16 16"
