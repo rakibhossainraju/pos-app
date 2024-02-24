@@ -1,8 +1,10 @@
+import { HomePage } from "./pages/HomePage.jsx";
+
 const App = () => {
   return (
-    <div>
-      <h1 className="text-5xl text-blue-700">Hello world</h1>
-    </div>
+    <>
+      <HomePage />
+    </>
   );
 };
 
