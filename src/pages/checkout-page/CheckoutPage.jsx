@@ -1,11 +1,14 @@
-import { NavbarComponent } from "../components/NavbarComponent.jsx";
-import { AddCustomerModal } from "../components/AddCustomerModal.jsx";
+import { NavbarComponent } from "../../components/NavbarComponent.jsx";
+import { AddCustomerModal } from "../../components/AddCustomerModal.jsx";
+import { CheckoutSection } from "./CheckoutSection.jsx";
 
-export const HomePage = () => {
+export const CheckoutPage = () => {
   return (
     <>
-      <NavbarComponent />
-      <AddCustomerModal />
+      <section className="w-1/2">
+        <NavbarComponent />
+        <CheckoutSection />
+      </section>
     </>
   );
 };

@@ -1,9 +1,9 @@
-import { HomePage } from "./pages/HomePage.jsx";
+import { CheckoutPage } from "./pages/checkout-page/CheckoutPage.jsx";
 
 const App = () => {
   return (
     <>
-      <HomePage />
+      <CheckoutPage />
     </>
   );
 };
