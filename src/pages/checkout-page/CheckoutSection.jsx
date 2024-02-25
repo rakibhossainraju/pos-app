@@ -1,9 +1,46 @@
 import { AddCustomerModal } from "../../components/AddCustomerModal.jsx";
 import { useState } from "react";
 import { SlotTabComponent } from "../../components/SlotTabComponent.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  extraCosts,
+  selectCartItems,
+  selectProductCount,
+  selectProductsTotalPrice,
+  selectProductSubTotalPrice,
+} from "../../redux-store/cart/cart.selector.js";
+import {
+  addItemToCart,
+  clearCartItems,
+  clearItemFromCart,
+  removeItemFromCart,
+} from "../../redux-store/cart/cart.action.js";
 
 export const CheckoutSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+  const productsSubTotalPrice = useSelector(selectProductSubTotalPrice).toFixed(
+    2,
+  );
+  const productsTotalPrice = useSelector(selectProductsTotalPrice).toFixed(2);
+  const totalProductCount = useSelector(selectProductCount);
+
+  const handelAddCartItem = (productToAdd) => {
+    dispatch(addItemToCart(cartItems, productToAdd));
+  };
+  const handelRemoveCartItem = (productToRemove) => {
+    dispatch(removeItemFromCart(cartItems, productToRemove));
+  };
+
+  const handelDeleteItemFromCart = (productToDelete) => {
+    dispatch(clearItemFromCart(cartItems, productToDelete));
+  };
+
+  const handelClearCartItems = () => {
+    dispatch(clearCartItems());
+  };
+
   return (
     <>
       <AddCustomerModal
@@ -28,9 +65,9 @@ export const CheckoutSection = () => {
 
       {/*Cart Listing*/}
       <section className="m-4">
-        {new Array(7).fill(1).map((num, index, array) => (
+        {cartItems.map((cartItem, index, array) => (
           <div
-            key={index}
+            key={cartItem.imageUrl}
             className="flex items-center justify-center gap-2 text-sm font-medium text-slate-500"
           >
             <button className="text-indigo-400 hover:text-indigo-700">
@@ -39,24 +76,33 @@ export const CheckoutSection = () => {
             <div
               className={`flex w-full items-center justify-between rounded-sm border border-indigo-300 px-2 py-2.5 ${array.length - 1 !== index && "border-b-transparent"}`}
             >
-              <p className="w-60">Hello World How is it going</p>
-              <p>$91.00</p>
+              <p className="w-60">{cartItem.name}</p>
+              <p>${cartItem.price}</p>
               <div className="flex">
-                <button className="text-indigo-500">
+                <button
+                  onClick={() => handelRemoveCartItem(cartItem)}
+                  className="text-indigo-500"
+                >
                   {checkoutSectionIcons.minus(
                     "hover:overflow-hidden hover:rounded-full hover:bg-indigo-700 hover:text-white",
                   )}
                 </button>
-                <p className="w-10 text-center">1</p>
-                <button className="group overflow-hidden p-[1px] text-indigo-500 hover:rounded-full hover:bg-indigo-700">
+                <p className="w-10 text-center">{cartItem.quantity}</p>
+                <button
+                  onClick={() => handelAddCartItem(cartItem)}
+                  className="group overflow-hidden p-[1px] text-indigo-500 hover:rounded-full hover:bg-indigo-700"
+                >
                   {checkoutSectionIcons.plus(
                     "[width:1.4rem] hover:rounded-2 hover:bg-indigo-700 group-hover:text-white",
                   )}
                 </button>
               </div>
-              <p>$91</p>
+              <p>${cartItem.quantity * cartItem.price}</p>
             </div>
-            <button className="text-indigo-400 hover:text-red-600">
+            <button
+              onClick={() => handelDeleteItemFromCart(cartItem)}
+              className="text-indigo-400 hover:text-red-600"
+            >
               {checkoutSectionIcons.bin()}
             </button>
           </div>
@@ -68,19 +114,19 @@ export const CheckoutSection = () => {
         <p className="flex w-full items-center justify-between border-t border-indigo-300 py-2">
           <span className="text-sm text-slate-500">Sub Total</span>
           <span className="text-[1.1rem] font-medium text-indigo-500">
-            $5025.50
+            ${productsSubTotalPrice}
           </span>
         </p>
         <p className="flex w-full items-center justify-between border-t border-indigo-300 py-2">
           <span className="text-sm text-slate-500">TAX</span>
           <span className="text-[1.1rem] font-medium text-indigo-500">
-            $25.50
+            ${extraCosts.tax.toFixed(2)}
           </span>
         </p>
         <p className="flex w-full items-center justify-between border-t border-indigo-300 py-2">
           <span className="text-sm text-slate-500">Shipping</span>
           <span className="text-[1.1rem] font-medium text-indigo-500">
-            $5.50
+            ${extraCosts.shipping.toFixed(2)}
           </span>
         </p>
         <p className="flex w-full items-center justify-between border-t border-indigo-300 py-2">
@@ -88,22 +134,25 @@ export const CheckoutSection = () => {
             Discount on Cart
           </span>
           <span className="text-[1.1rem] font-medium text-indigo-500">
-            $10.00
+            ${extraCosts.discount.toFixed(2)}
           </span>
         </p>
       </section>
 
       {/*Total Section*/}
       <section className="m-4 flex items-center justify-between rounded-[5px] bg-indigo-100 py-4 pl-4 text-indigo-700">
-        <p className="font-medium">Products Count (10)</p>
+        <p className="font-medium">Products Count ({totalProductCount})</p>
         <p className="mr-2 flex w-[19rem] justify-between text-2xl font-semibold">
-          <span>Total</span> <span>$5005.50</span>
+          <span>Total</span> <span>${productsTotalPrice}</span>
         </p>
       </section>
 
       {/*Slot Section*/}
       <section className="mx-4 mb-8 mt-4 flex items-center gap-5 max-[1170px]:flex-wrap ">
-        <SlotTabComponent styles="w-full gap-4 bg-red-100 py-4 text-lg text-red-600 shadow-sm hover:bg-red-200 hover:text-red-800">
+        <SlotTabComponent
+          onClick={handelClearCartItems}
+          styles="w-full gap-4 bg-red-100 py-4 text-lg text-red-600 shadow-sm hover:bg-red-200 hover:text-red-800"
+        >
           <span className="block rotate-45">
             {checkoutSectionIcons.plus("[width:1.4rem]")}
           </span>

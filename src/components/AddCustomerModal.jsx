@@ -1,5 +1,4 @@
 import { InputComponent } from "./InputComponent.jsx";
-
 export const AddCustomerModal = ({ isModalOpen, setIsModalOpen }) => {
   return (
     <section

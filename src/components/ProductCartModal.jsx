@@ -1,5 +1,15 @@
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItems } from "../redux-store/cart/cart.selector.js";
+import { addItemToCart } from "../redux-store/cart/cart.action.js";
+
 export const ProductCartModal = ({ isModalOpen, setIsModalOpen, product }) => {
   const { imageUrl, name, price } = product;
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+
+  const handelAddCartItem = (productToAdd) => {
+    dispatch(addItemToCart(cartItems, productToAdd));
+  };
   return (
     <section
       className={`flex-center absolute inset-0 z-20 min-h-screen w-full transition-opacity duration-500 ${
@@ -61,7 +71,10 @@ export const ProductCartModal = ({ isModalOpen, setIsModalOpen, product }) => {
               </div>
             </div>
           </div>
-          <button className="rounded-[5px] bg-indigo-600 px-2 py-3 text-center text-[1rem] font-semibold text-white duration-300 hover:bg-indigo-500 ">
+          <button
+            onClick={() => handelAddCartItem(product)}
+            className="rounded-[5px] bg-indigo-600 px-2 py-3 text-center text-[1rem] font-semibold text-white duration-300 hover:bg-indigo-500 "
+          >
             Add to Cart
           </button>
         </div>

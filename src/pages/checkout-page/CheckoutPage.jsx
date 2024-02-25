@@ -18,7 +18,7 @@ export const CheckoutPage = () => {
         <h1 className="py-5 text-center">
           This section is reserve for the categories
         </h1>
-        <div className="products-container flex h-screen flex-wrap items-center justify-center gap-3 overflow-y-scroll pt-3">
+        <div className="products-container flex h-[90vh] flex-wrap items-center justify-center gap-3 overflow-y-scroll pt-3">
           {productsArr.map((product) => (
             <ProductCartComponent key={product.name} product={product} />
           ))}
