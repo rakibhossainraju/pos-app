@@ -28,7 +28,7 @@ export const CheckoutSection = () => {
 
       {/*Cart Listing*/}
       <section className="m-4">
-        {new Array(5).fill(1).map((num, index, array) => (
+        {new Array(7).fill(1).map((num, index, array) => (
           <div
             key={index}
             className="flex items-center justify-center gap-2 text-sm font-medium text-slate-500"
@@ -104,7 +104,9 @@ export const CheckoutSection = () => {
       {/*Slot Section*/}
       <section className="mx-4 mb-8 mt-4 flex items-center gap-5 max-[1170px]:flex-wrap ">
         <SlotTabComponent styles="w-full gap-4 bg-red-100 py-4 text-lg text-red-600 shadow-sm hover:bg-red-200 hover:text-red-800">
-          <span className="block rotate-45">{checkoutSectionIcons.plus()}</span>
+          <span className="block rotate-45">
+            {checkoutSectionIcons.plus("[width:1.4rem]")}
+          </span>
           Cancel
         </SlotTabComponent>
         <SlotTabComponent styles="w-full gap-4 bg-purple-100 py-4 text-lg text-purple-600 shadow-sm hover:bg-purple-200 hover:text-purple-800">

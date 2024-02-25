@@ -4,9 +4,18 @@
 
 #root {
   @apply min-h-screen w-full;
-  /*color: rgba(156, 163, 175, 0.49);*/
+}
+body::-webkit-scrollbar {
+  width: 5px;
+}
+body::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-indigo-400 hover:bg-indigo-600;
 }
 
 .flex-center {
   @apply flex items-center justify-center;
+}
+.products-container::-webkit-scrollbar {
+  width: 0;
+  /*color: rgba(117, 124, 129, 0.7);*/
 }

@@ -1,14 +1,15 @@
 import { InputComponent } from "./InputComponent.jsx";
-import { useEffect, useState } from "react";
 
 export const AddCustomerModal = ({ isModalOpen, setIsModalOpen }) => {
   return (
     <section
-      className={`flex-center absolute inset-0 z-20 min-h-screen w-full ${isModalOpen ? "scale-100" : "scale-0"}`}
+      className={`flex-center absolute inset-0 z-20 min-h-screen w-full transition-opacity duration-500 ${
+        isModalOpen ? "scale-100" + " opacity-100" : "scale-0 opacity-0"
+      }`}
     >
       <button
         onClick={() => setIsModalOpen(false)}
-        className={`absolute inset-0 -z-10 h-[115%]  bg-[#9CA3AF7E]`}
+        className={`absolute inset-0 -z-10 h-[115%] bg-[#757C81B2]`}
       />
       <form
         className={`group relative z-20 flex w-full max-w-[30rem] flex-col gap-2 rounded-lg bg-white px-12 py-10 shadow-xl`}

@@ -1,0 +1,3 @@
+export const PRODUCTS_TYPES = {
+  UPDATE_PRODUCTS: "UPDATE_PRODUCTS",
+};
