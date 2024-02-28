@@ -72,49 +72,65 @@ export const CheckoutSection = () => {
       </section>
 
       {/*Cart Listing*/}
-      <section className="m-4">
-        {cartItems.map((cartItem, index, array) => (
-          <div
-            key={cartItem.imageUrl}
-            className="flex items-center justify-center gap-2 text-sm font-medium text-slate-500"
-          >
-            <button className="text-indigo-400 hover:text-indigo-700">
-              {checkoutSectionIcons.edit()}
-            </button>
+      <section className="m-4 min-h-40">
+        {cartItems.length > 0 ? (
+          cartItems.map((cartItem, index, array) => (
             <div
-              className={`flex w-full items-center justify-between rounded-sm border border-indigo-300 px-2 py-2.5 ${array.length - 1 !== index && "border-b-transparent"}`}
+              key={cartItem.imageUrl}
+              className="flex items-center justify-center gap-2 text-sm font-medium text-slate-500"
             >
-              <p className="w-60">{cartItem.name}</p>
-              <p>${cartItem.price}</p>
-              <div className="flex">
-                <button
-                  onClick={() => handelRemoveCartItem(cartItem)}
-                  className="text-indigo-500"
-                >
-                  {checkoutSectionIcons.minus(
-                    "hover:overflow-hidden hover:rounded-full hover:bg-indigo-700 hover:text-white",
-                  )}
-                </button>
-                <p className="w-10 text-center">{cartItem.quantity}</p>
-                <button
-                  onClick={() => handelAddCartItem(cartItem)}
-                  className="group overflow-hidden p-[1px] text-indigo-500 hover:rounded-full hover:bg-indigo-700"
-                >
-                  {checkoutSectionIcons.plus(
-                    "[width:1.4rem] hover:rounded-2 hover:bg-indigo-700 group-hover:text-white",
-                  )}
-                </button>
+              <button className="text-indigo-400 hover:text-indigo-700">
+                {checkoutSectionIcons.edit()}
+              </button>
+              <div
+                className={`flex w-full items-center justify-between rounded-sm border border-indigo-300 px-2 py-2.5 ${array.length - 1 !== index && "border-b-transparent"}`}
+              >
+                <p className="w-60">{cartItem.name}</p>
+                <p>${cartItem.price}</p>
+                <div className="flex">
+                  <button
+                    onClick={() => handelRemoveCartItem(cartItem)}
+                    className="text-indigo-500"
+                  >
+                    {checkoutSectionIcons.minus(
+                      "hover:overflow-hidden hover:rounded-full hover:bg-indigo-700 hover:text-white",
+                    )}
+                  </button>
+                  <p className="w-10 text-center">{cartItem.quantity}</p>
+                  <button
+                    onClick={() => handelAddCartItem(cartItem)}
+                    className="group overflow-hidden p-[1px] text-indigo-500 hover:rounded-full hover:bg-indigo-700"
+                  >
+                    {checkoutSectionIcons.plus(
+                      "[width:1.4rem] hover:rounded-2 hover:bg-indigo-700 group-hover:text-white",
+                    )}
+                  </button>
+                </div>
+                <p>${cartItem.quantity * cartItem.price}</p>
               </div>
-              <p>${cartItem.quantity * cartItem.price}</p>
+              <button
+                onClick={() => handelDeleteItemFromCart(cartItem)}
+                className="text-indigo-400 hover:text-red-600"
+              >
+                {checkoutSectionIcons.bin()}
+              </button>
             </div>
-            <button
-              onClick={() => handelDeleteItemFromCart(cartItem)}
-              className="text-indigo-400 hover:text-red-600"
-            >
-              {checkoutSectionIcons.bin()}
-            </button>
+          ))
+        ) : (
+          <div className="flex-center gap-4 rounded-[5px] bg-gray-200 px-6 py-6">
+            <img
+              src="https://demo.martvill.techvill.net/Modules/Pos/Resources/js/components/assets/images/empty-box.svg"
+              alt="card img box"
+              className="aspect-square w-28"
+            />
+            <div className="text-gray-600">
+              <h3 className="mb-2 text-xl font-semibold">Your Cart Awaits.</h3>
+              <p className="font-medium">
+                Please select a product from the list to add to your cart.
+              </p>
+            </div>
           </div>
-        ))}
+        )}
       </section>
 
       {/*Price Board Section*/}
