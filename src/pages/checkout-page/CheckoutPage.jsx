@@ -4,6 +4,7 @@ import { SearchBarComponent } from "../../components/SearchBarComponent.jsx";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../redux-store/products/products.selector.js";
 import { ProductCartComponent } from "../../components/ProductCartComponent.jsx";
+import { CategoriesSelectBarComponent } from "../../components/CategoriesSelectBarComponent.jsx";
 
 export const CheckoutPage = () => {
   const products = useSelector(selectProducts);
@@ -15,9 +16,7 @@ export const CheckoutPage = () => {
       </section>
       <section className="w-1/2">
         <SearchBarComponent />
-        <h1 className="py-5 text-center">
-          This section is reserve for the categories
-        </h1>
+        <CategoriesSelectBarComponent />
         <div className="products-container flex h-[90vh] flex-wrap items-center justify-center gap-3 overflow-y-scroll pt-3">
           {products.length > 0 ? (
             products.map((product) => (
