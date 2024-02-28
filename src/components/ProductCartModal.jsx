@@ -1,14 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartItems } from "../redux-store/cart/cart.selector.js";
-import { addItemToCart } from "../redux-store/cart/cart.action.js";
+import {
+  selectCartItems,
+  selectCartItemsIds,
+} from "../redux-store/cart/cart.selector.js";
+import {
+  addCartItemsId,
+  addItemToCart,
+  clearItemFromCart,
+  removeCartItemsId,
+} from "../redux-store/cart/cart.action.js";
 
 export const ProductCartModal = ({ isModalOpen, setIsModalOpen, product }) => {
   const { imageUrl, name, price } = product;
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
-
-  const handelAddCartItem = (productToAdd) => {
-    dispatch(addItemToCart(cartItems, productToAdd));
+  const cartItemsIds = useSelector(selectCartItemsIds);
+  const isProductExistsInTheCart = cartItemsIds.has(product.id);
+  const handelCartActon = () => {
+    if (!isProductExistsInTheCart) {
+      dispatch(addItemToCart(cartItems, product));
+      dispatch(addCartItemsId(cartItemsIds, product.id));
+    } else {
+      dispatch(clearItemFromCart(cartItems, product));
+      dispatch(removeCartItemsId(cartItemsIds, product.id));
+    }
   };
   return (
     <section
@@ -72,10 +87,10 @@ export const ProductCartModal = ({ isModalOpen, setIsModalOpen, product }) => {
             </div>
           </div>
           <button
-            onClick={() => handelAddCartItem(product)}
-            className="rounded-[5px] bg-indigo-600 px-2 py-3 text-center text-[1rem] font-semibold text-white duration-300 hover:bg-indigo-500 "
+            onClick={handelCartActon}
+            className={`rounded-[5px] border px-2 py-3 text-center text-[1rem] font-semibold duration-300 ${isProductExistsInTheCart ? "border-indigo-600 bg-white text-indigo-600 hover:bg-indigo-50" : "bg-indigo-600 text-white hover:bg-indigo-500"}`}
           >
-            Add to Cart
+            {isProductExistsInTheCart ? "Remove from cart" : "Add to Cart"}
           </button>
         </div>
       </div>

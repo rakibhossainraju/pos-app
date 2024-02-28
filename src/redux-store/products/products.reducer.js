@@ -2,7 +2,8 @@ import { PRODUCTS_TYPES } from "./products.types.js";
 import PRODUCTS from "../../db/index-db.json";
 
 const PRODUCTS_INITIAL_STATE = {
-  products: PRODUCTS,
+  productsData: PRODUCTS,
+  products: [],
 };
 
 export const productsReducer = (
@@ -10,7 +11,7 @@ export const productsReducer = (
   { type, payload } = {},
 ) => {
   switch (type) {
-    case PRODUCTS_TYPES.UPDATE_PRODUCTS:
+    case PRODUCTS_TYPES.SET_PRODUCTS:
       return { ...state, products: payload };
     default:
       return state;

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   extraCosts,
   selectCartItems,
+  selectCartItemsIds,
   selectProductCount,
   selectProductsTotalPrice,
   selectProductSubTotalPrice,
@@ -12,7 +13,9 @@ import {
 import {
   addItemToCart,
   clearCartItems,
+  clearCartItemsIds,
   clearItemFromCart,
+  removeCartItemsId,
   removeItemFromCart,
 } from "../../redux-store/cart/cart.action.js";
 
@@ -25,20 +28,25 @@ export const CheckoutSection = () => {
   );
   const productsTotalPrice = useSelector(selectProductsTotalPrice).toFixed(2);
   const totalProductCount = useSelector(selectProductCount);
+  const cartItemsIds = useSelector(selectCartItemsIds);
 
   const handelAddCartItem = (productToAdd) => {
     dispatch(addItemToCart(cartItems, productToAdd));
   };
   const handelRemoveCartItem = (productToRemove) => {
     dispatch(removeItemFromCart(cartItems, productToRemove));
+    productToRemove.quantity === 1 &&
+      dispatch(removeCartItemsId(cartItemsIds, productToRemove.id));
   };
 
   const handelDeleteItemFromCart = (productToDelete) => {
     dispatch(clearItemFromCart(cartItems, productToDelete));
+    dispatch(removeCartItemsId(cartItemsIds, productToDelete.id));
   };
 
   const handelClearCartItems = () => {
     dispatch(clearCartItems());
+    dispatch(clearCartItemsIds());
   };
 
   return (

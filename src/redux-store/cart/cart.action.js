@@ -1,6 +1,21 @@
 import createAction from "../../utils/create-action.utils.js";
 import { CART_ACTION_TYPES } from "./cart.types.js";
 
+// Cart Items Ids Actions
+export const addCartItemsId = (cartItemsIds, idToAdd) => {
+  const newCartItemsIds = new Set(cartItemsIds);
+  newCartItemsIds.add(idToAdd);
+  return createAction(CART_ACTION_TYPES.SET_CART_ITEMS_IDS, newCartItemsIds);
+};
+export const removeCartItemsId = (cartItemsIds, idToRemove) => {
+  const newCartItemsIds = new Set(cartItemsIds);
+  newCartItemsIds.delete(idToRemove);
+  return createAction(CART_ACTION_TYPES.SET_CART_ITEMS_IDS, newCartItemsIds);
+};
+export const clearCartItemsIds = () =>
+  createAction(CART_ACTION_TYPES.SET_CART_ITEMS_IDS, []);
+
+// Cart Items Actions
 export const addItemToCart = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToAdd.id,
@@ -17,7 +32,6 @@ export const addItemToCart = (cartItems, productToAdd) => {
   const newCartItems = [...cartItems, { ...productToAdd, quantity: 1 }];
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
-
 export const removeItemFromCart = (cartItems, productToRemove) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToRemove.id,

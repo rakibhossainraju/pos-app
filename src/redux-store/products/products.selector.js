@@ -1,9 +1,10 @@
 import { createSelector } from "reselect";
 
-export const selectProducts = ({ products }) => products.products;
+export const selectProductsData = ({ products }) => products.productsData;
 
+export const selectProducts = ({ products }) => products.products;
 export const selectProductsArr = createSelector(
-  [selectProducts],
+  [selectProductsData],
   (products) => {
     return products.reduce((acc, curCategory) => {
       const { title, items } = curCategory;

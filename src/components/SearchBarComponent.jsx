@@ -1,4 +1,13 @@
+import { useDispatch, useSelector } from "react-redux";
+import { searchProducts } from "../redux-store/products/products.actions.js";
+import { selectProductsArr } from "../redux-store/products/products.selector.js";
+
 export const SearchBarComponent = () => {
+  const dispatch = useDispatch();
+  const productsArr = useSelector(selectProductsArr);
+  const handelSearch = ({ currentTarget: { value } }) => {
+    dispatch(searchProducts(productsArr, value));
+  };
   return (
     <div className="group m-4 flex items-center gap-4 rounded-[4px] bg-white px-4 py-2 text-center shadow-[0_2px_8px_#63636333]">
       <span>
@@ -7,6 +16,7 @@ export const SearchBarComponent = () => {
         )}
       </span>
       <input
+        onChange={handelSearch}
         className="w-full bg-transparent text-[1rem] outline-none placeholder:text-gray-400 group-focus-within:placeholder:text-indigo-400"
         type="text"
         placeholder="Search Products..."
